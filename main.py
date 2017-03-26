@@ -38,14 +38,14 @@ page_footer = """
 """
 
 def page_build(text_content):		
-		rotate_label = "<label> Rotate by: </label>"
+		rotate_label = "<label style='font-family: Arial; color: green;'> Rotate by: </label>"
 		rotation_input ="<input style='font-family: Arial; color: green; width:153px;' type='number' name='userInpRotation'/>"
-		message_label = "<label> Type a message: </label>"
+		message_label = "<label style='font-family: Arial; color: green;'> Type a message: </label>"
 		textarea = "<textarea style='font-family: Arial; color: green; width:153px; height:60px' name='userTextArea'>" + text_content + "</textarea>"
 		break_tag = "<br>"
 		submit = "<input type='submit'/>"
  		form ="<form action='.' method='post'>" + "<table style='border: #000000 1px solid;'><tr><td>" + rotate_label + "</td><td></td><td>" + rotation_input + "</td></tr><tr><td>"+ break_tag + message_label + "</td><td></td><td>" + textarea + "</td></tr>"+ "<tr><td></td><td>"+ break_tag + submit + "</td><td></td></tr></table>"+ "</form>"
-		header = "<h2> Web Caesar </h2>"
+		header = "<h2 style='font-family: Arial; color: green;'> Web Caesar </h2>"
 		
 		retResponse = page_header + header + form + page_footer
 		return retResponse
