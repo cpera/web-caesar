@@ -16,6 +16,40 @@
 #
 import webapp2
 import caesar
+import cgi
+
+# html boilerplate for the top of every page
+page_header = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Caesar</title>
+	<!-- <link type="text/css" rel="stylesheet" href="style.css" /> -->
+</head>
+<body>    
+<div>
+"""
+
+# html boilerplate for the bottom of every page
+page_footer = """
+</div>
+</body>
+</html>
+"""
+
+def page_build(text_content):		
+		rotate_label = "<label> Rotate by: </label>"
+		rotation_input ="<input style='font-family: Arial; color: green; width:153px;' type='number' name='userInpRotation'/>"
+		message_label = "<label> Type a message: </label>"
+		textarea = "<textarea style='font-family: Arial; color: green; width:153px; height:60px' name='userTextArea'>" + text_content + "</textarea>"
+		break_tag = "<br>"
+		submit = "<input type='submit'/>"
+ 		form ="<form action='.' method='post'>" + "<table style='border: #000000 1px solid;'><tr><td>" + rotate_label + "</td><td></td><td>" + rotation_input + "</td></tr><tr><td>"+ break_tag + message_label + "</td><td></td><td>" + textarea + "</td></tr>"+ "<tr><td></td><td>"+ break_tag + submit + "</td><td></td></tr></table>"+ "</form>"
+		header = "<h2> Web Caesar </h2>"
+		
+		retResponse = page_header + header + form + page_footer
+		return retResponse
+		
 
 class MainHandler(webapp2.RequestHandler):
 	def post(self):
@@ -23,15 +57,13 @@ class MainHandler(webapp2.RequestHandler):
 		rotVal = self.request.get("userInpRotation")	
 		rotVal = int(rotVal)
 		encrypted_message = caesar.encrypt(message, rotVal) 
-		self.response.write("secret message:" + encrypted_message)
+		escape_message = cgi.escape(encrypted_message)
+		content = page_build(escape_message)
+		self.response.write(content)
 	def get(self):		
 		message = "Hello World!" 		
-		rotation_input ="<input type='number' name='userInpRotation'/>"
-		textarea = "<textarea name='userTextArea'>" + "</textarea>"
-		break_tag = "<br>"
-		submit = "<input type='submit'/>"
- 		form ="<form action='.' method='post'>" + rotation_input + break_tag + textarea + break_tag + submit + "</form>"
-		self.response.write(form)
+		content = page_build("")
+		self.response.write(content)
 		
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
